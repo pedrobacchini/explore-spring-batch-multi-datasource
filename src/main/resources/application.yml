@@ -14,7 +14,7 @@ spring:
             connection:
                 provider_disables_autocommit: true
     datasource:
-        url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?currentSchema=${DB_SCHEMA}
+        jdbc-url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?currentSchema=${DB_SCHEMA}
         username: ${DB_USER}
         password: ${DB_PASSWORD}
         driver-class-name: org.postgresql.Driver
@@ -29,3 +29,22 @@ spring:
             connection-test-query: SELECT 1
             validation-interval: 5000
             pool-name: HikariPool-Domain
+    batch:
+        jdbc:
+            initialize-schema: always
+        datasource:
+            jdbc-url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}?currentSchema=${BATCH_DB_SCHEMA}
+            username: ${DB_USER}
+            password: ${DB_PASSWORD}
+            driver-class-name: org.postgresql.Driver
+            hikari:
+                auto-commit: true
+                continue-on-error: true
+                connection-timeout: ${BATCH_DB_CONNECTION_TIMEOUT}
+                idle-timeout: ${BATCH_DB_IDLE_TIMEOUT}
+                minimum-idle: ${BATCH_DB_MINIMUM_IDLE}
+                max-lifetime: ${BATCH_DB_MAX_LIFETIME}
+                maximum-pool-size: ${BATCH_DB_MAXIMUM_POOL_SIZE}
+                connection-test-query: SELECT 1
+                validation-interval: 5000
+                pool-name: HikariPool-Batch
